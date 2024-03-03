@@ -13,8 +13,9 @@ import CompletedButton from './components/button';
 function App(): React.JSX.Element {
   const [input, setinput] = useState('');
   const [todos, settodos] = useState([]);
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.main}>
       <ScrollView>
         <View style={styles.backgroundContainer}>
           <ImageBackground
@@ -31,13 +32,24 @@ function App(): React.JSX.Element {
             todos.map(elem => {
               return (
                 <View style={styles.todoCard} key={elem.date}>
-                  <Text style={styles.todoCardTitle}>{elem.title}</Text>
-                  <CompletedButton />
+                  <Text style={styles.todoCardTitle}>
+                    {elem.title} from {elem.date}
+                  </Text>
+                  <Text
+                    onPress={() => {
+                      const filteredTodos = todos.filter(
+                        element => element.date != elem.date,
+                      );
+                      settodos(filteredTodos);
+                    }}>
+                    Done
+                  </Text>
                 </View>
               );
             })}
         </View>
-        <View>
+
+        <View style={styles.inputBar}>
           <TextInput
             placeholder="Add a task"
             onChangeText={e => setinput(e)}
@@ -49,6 +61,7 @@ function App(): React.JSX.Element {
                 comleted: false,
               };
               settodos([...todos, todo]);
+              setinput('');
             }}
           />
           <Text>button will be here</Text>
@@ -93,12 +106,27 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   todoCardTitle: {
     alignSelf: 'flex-start',
   },
   todoCardCompleteBtn: {
     alignSelf: 'flex-end',
+  },
+  main: {
+    position: 'relative',
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  inputBar: {
+    flex: 1,
+    height: 100,
+    width: 300,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'stretch',
   },
 });
 
