@@ -1,11 +1,16 @@
-import {Text, TouchableOpacity, View} from 'react-native';
+/* eslint-disable prettier/prettier */
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 function CompletedButton() {
   return (
-    <TouchableOpacity>
-      <Text>Done</Text>
+    <TouchableOpacity style={styles.todoCardCompleteBtn}>
+      <Text style={styles.todoCardCompleteBtn}>Done</Text>
     </TouchableOpacity>
   );
 }
-
+const styles = StyleSheet.create({
+  todoCardCompleteBtn: {
+    alignSelf: 'flex-end',
+  },
+});
 export default CompletedButton;
