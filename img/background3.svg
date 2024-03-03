@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="144.371mm" height="100.02401mm" viewBox="0 0 144.371 100.024" version="1.1" id="svg8">
+  <defs id="defs2">
+    <linearGradient id="linearGradient1679">
+      <stop style="stop-color:#00124c;stop-opacity:1" offset="0" id="stop1675" />
+      <stop style="stop-color:#1665e1;stop-opacity:1" offset="1" id="stop1677" />
+    </linearGradient>
+    <linearGradient id="linearGradient4524">
+      <stop style="stop-color:#2b94d7;stop-opacity:1" offset="0" id="stop4520" />
+      <stop style="stop-color:#134b7b;stop-opacity:1" offset="1" id="stop4522" />
+    </linearGradient>
+    <linearGradient xlink:href="#linearGradient4524" id="linearGradient4526-4" x1="-127.75595" y1="-9.5386896" x2="298.22321" y2="171.88988" gradientUnits="userSpaceOnUse" gradientTransform="matrix(3.7795276,0,0,3.8587393,345.71429,-57.995933)" />
+    <linearGradient xlink:href="#linearGradient1679" id="linearGradient1681" x1="-50.612144" y1="-170.15155" x2="-17.63797" y2="-129.40263" gradientUnits="userSpaceOnUse" gradientTransform="translate(24.926208,-4.140672)" />
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath3727">
+      <rect style="opacity:0.5;fill:#000000;stroke:none;stroke-width:1.40832;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stop-color:#000000" id="rect3729" width="144.371" height="100.02401" x="14.383314" y="-121.72597" />
+    </clipPath>
+  </defs>
+  <metadata id="metadata5">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" transform="translate(-21.820581,125.64581)">
+    <g id="g1663" transform="translate(7.4372672,-3.9198443)" clip-path="url(#clipPath3727)">
+      <use x="0" y="0" xlink:href="#path1458" id="use1521" transform="translate(157.31239,60.251455)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <g id="g1567" style="fill:#ffff00;stroke:#800000">
+        <use x="0" y="0" xlink:href="#path1458" id="use1523" transform="translate(142.87525,85.257315)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+        <use x="0" y="0" xlink:href="#path1458" id="use1563" transform="translate(171.74952,85.257315)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      </g>
+      <g id="g1557" style="fill:#ffff00;stroke:#800000">
+        <use x="0" y="0" xlink:href="#path1458" id="use1533" transform="translate(56.252407,85.257315)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+        <use x="0" y="0" xlink:href="#path1458" id="use1553" transform="translate(27.378128,85.257315)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      </g>
+      <g id="g1517" transform="translate(-14.437141,-75.017579)" style="fill:#ffff00;stroke:#800000">
+        <use x="0" y="0" xlink:href="#path1458" id="use1509" transform="translate(99.563827,110.26317)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+        <use x="0" y="0" xlink:href="#path1458" id="use1511" transform="translate(128.43811,110.26317)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+        <use x="0" y="0" xlink:href="#path1458" id="use1513" transform="translate(114.00097,135.26903)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      </g>
+      <use x="0" y="0" xlink:href="#path1458" id="use1483" transform="translate(85.126687,135.26903)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <g id="g1507" style="fill:#ffff00;stroke:#800000">
+        <use x="0" y="0" xlink:href="#path1458" id="use1462" transform="translate(99.563827,110.26317)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+        <use x="0" y="0" xlink:href="#path1458" id="use1464" transform="translate(128.43811,110.26317)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+        <use x="0" y="0" xlink:href="#path1458" id="use1466" transform="translate(114.00097,135.26903)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+        <use x="0" y="0" xlink:href="#path1458" id="use1485" transform="translate(114.00097,85.257315)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      </g>
+      <use x="0" y="0" xlink:href="#path1458" id="use1487" transform="translate(85.126687,85.257315)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1519" transform="translate(128.43811,60.251455)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1525" transform="translate(142.87525,35.245596)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1529" transform="translate(41.815268,60.251455)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1531" transform="translate(70.689552,60.251455)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1535" transform="translate(56.252407,35.245596)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1541" transform="translate(56.252407,135.26903)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1545" transform="translate(41.815267,110.26317)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1569" transform="translate(142.87524,135.26903)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1571" transform="translate(171.74952,135.26903)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1575" transform="translate(157.31238,110.26317)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1587" transform="translate(171.74952,35.245596)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1589" transform="translate(27.378128,35.245596)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1591" transform="translate(27.378128,135.26903)" width="100%" height="100%" style="fill:#ffff00;stroke:#800000" />
+      <use x="0" y="0" xlink:href="#path1458" id="use1595" transform="translate(70.689552,110.26317)" width="100%" height="100%" />
+    </g>
+    <flowRoot xml:space="preserve" id="flowRoot4528" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"><flowRegion id="flowRegion4530" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace"><rect id="rect4532" width="762.85712" height="305.71429" x="-205.71428" y="142.51968" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace" /></flowRegion><flowPara id="flowPara4534" /></flowRoot>
+    <path style="fill:url(#linearGradient1681);fill-opacity:1;stroke:#000000;stroke-width:0.799999;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stop-color:#000000" id="path1458" d="m -12.995006,-140.3007 -14.437139,-8.33528 -1e-6,-16.67057 14.437139,-8.33529 14.4371393,8.33529 5e-7,16.67057 z" />
+  </g>
+</svg>
