@@ -9,6 +9,35 @@ import {
   View,
 } from 'react-native';
 import CompletedButton from './components/button';
+function formatDateToDayMonth(timestamp) {
+  // Convert timestamp to milliseconds by multiplying by 1000
+  const date = new Date(timestamp); // Assuming the timestamp is in seconds
+
+  // Array of month names
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  // Get the day and month components of the date
+  const day = date.getDate();
+  const monthIndex = date.getMonth();
+
+  // Construct the formatted date string
+  const formattedDate = `${day} ${monthNames[monthIndex]}`;
+
+  return formattedDate;
+}
 
 function App(): React.JSX.Element {
   const [input, setinput] = useState('');
@@ -30,11 +59,13 @@ function App(): React.JSX.Element {
         <View>
           {todos &&
             todos.map(elem => {
+              // const formattedDate = formatDateToDayMonth(elem.date);
               return (
                 <View style={styles.todoCard} key={elem.date}>
-                  <Text style={styles.todoCardTitle}>
-                    {elem.title} from {elem.date}
-                  </Text>
+                  <View>
+                    <Text style={styles.todoCardTitle}>{elem.title}</Text>
+                    <Text>from {formatDateToDayMonth(elem.date)}</Text>
+                  </View>
                   <Text
                     onPress={() => {
                       const filteredTodos = todos.filter(
@@ -107,9 +138,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    overflow: 'scroll',
   },
   todoCardTitle: {
     alignSelf: 'flex-start',
+    fontSize: 18,
+    color: 'black',
+    fontWeight: '500',
   },
   todoCardCompleteBtn: {
     alignSelf: 'flex-end',
