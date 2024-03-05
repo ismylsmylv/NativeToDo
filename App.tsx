@@ -76,15 +76,18 @@ function App(): React.JSX.Element {
                     <Text
                       style={styles.todoDoneBtn}
                       onPress={() => {
-                        const filteredTodos = todos.filter((element: any) => {
-                          if (element.date == elem.date) {
-                            element.completed = true;
+                        const updatedTodos = todos.map(todo => {
+                          if (todo.title === elem.title) {
+                            return {...todo, completed: true};
                           }
+                          return todo;
                         });
-                        settodos(filteredTodos);
+
+                        settodos(updatedTodos);
                       }}>
                       Done
                     </Text>
+
                     <Text
                       style={styles.todoDeleteBtn}
                       onPress={() => {
