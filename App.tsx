@@ -8,8 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import CompletedButton from './components/button';
-function formatDateToDayMonth(timestamp) {
+function formatDateToDayMonth(timestamp: string | number | Date) {
   // Convert timestamp to milliseconds by multiplying by 1000
   const date = new Date(timestamp); // Assuming the timestamp is in seconds
 
@@ -56,48 +55,82 @@ function App(): React.JSX.Element {
             colors={['#4c669f', '#3b5998', '#192f6a']}
             style={styles.linearGradient}></LinearGradient> */}
         </View>
-        <View>
+        <View style={styles.todoList}>
           {todos &&
-            todos.map(elem => {
+            todos.map((elem: any) => {
               // const formattedDate = formatDateToDayMonth(elem.date);
               return (
                 <View style={styles.todoCard} key={elem.date}>
                   <View>
-                    <Text style={styles.todoCardTitle}>{elem.title}</Text>
+                    <Text
+                      style={
+                        elem.completed
+                          ? [styles.todoCardTitle, styles.completedTodo]
+                          : [styles.todoCardTitle]
+                      }>
+                      {elem.title}
+                    </Text>
                     <Text>from {formatDateToDayMonth(elem.date)}</Text>
                   </View>
-                  <Text
-                    onPress={() => {
-                      const filteredTodos = todos.filter(
-                        element => element.date != elem.date,
-                      );
-                      settodos(filteredTodos);
-                    }}>
-                    Done
-                  </Text>
+                  <View style={styles.todoCardControls}>
+                    <Text
+                      style={styles.todoDoneBtn}
+                      onPress={() => {
+                        const filteredTodos = todos.filter((element: any) => {
+                          if (element.date == elem.date) {
+                            element.completed = true;
+                          }
+                        });
+                        settodos(filteredTodos);
+                      }}>
+                      Done
+                    </Text>
+                    <Text
+                      style={styles.todoDeleteBtn}
+                      onPress={() => {
+                        const filteredTodos = todos.filter(
+                          (element: any) => element.date != elem.date,
+                        );
+                        settodos(filteredTodos);
+                      }}>
+                      Delete
+                    </Text>
+                  </View>
                 </View>
               );
             })}
         </View>
-
-        <View style={styles.inputBar}>
-          <TextInput
-            placeholder="Add a task"
-            onChangeText={e => setinput(e)}
-            defaultValue={input}
-            onSubmitEditing={e => {
-              const todo = {
-                title: input,
-                date: Date.now(),
-                comleted: false,
-              };
-              settodos([...todos, todo]);
-              setinput('');
-            }}
-          />
-          <Text>button will be here</Text>
-        </View>
       </ScrollView>
+      <View style={styles.inputBar}>
+        <TextInput
+          style={styles.inputField}
+          placeholder="Add a task"
+          onChangeText={e => setinput(e)}
+          defaultValue={input}
+          onSubmitEditing={e => {
+            const todo = {
+              title: input,
+              date: Date.now(),
+              completed: false,
+            };
+            settodos([...todos, todo]);
+            setinput('');
+          }}
+        />
+        <Text
+          style={styles.inputAdd}
+          onPress={e => {
+            const todo = {
+              title: input,
+              date: Date.now(),
+              completed: false,
+            };
+            settodos([...todos, todo]);
+            setinput('');
+          }}>
+          add
+        </Text>
+      </View>
     </SafeAreaView>
   );
 }
@@ -152,16 +185,52 @@ const styles = StyleSheet.create({
   main: {
     position: 'relative',
     flex: 1,
+    height: 'auto',
     justifyContent: 'space-between',
   },
   inputBar: {
     flex: 1,
-    height: 100,
-    width: 300,
+    // height: 100,
+    // width: 300,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'stretch',
+    // justifyContent: 'center',
+    // alignItems: 'stretch',
+    width: '100%',
+    height: 50,
+    backgroundColor: '#4260f5',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    position: 'absolute', //Here is the trick
+    bottom: 0, //Here is the trick
+    zIndex: 100,
+  },
+  todoCardControls: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  todoDoneBtn: {
+    color: 'green',
+    marginRight: 10,
+  },
+  todoDeleteBtn: {
+    color: 'red',
+  },
+  completedTodo: {
+    textDecorationLine: 'line-through',
+  },
+  inputField: {
+    color: 'white',
+  },
+  inputAdd: {
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    color: 'black',
+    backgroundColor: 'white',
+    borderRadius: 5,
   },
 });
 
