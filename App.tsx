@@ -40,7 +40,7 @@ function formatDateToDayMonth(timestamp: string | number | Date) {
 
 function App(): React.JSX.Element {
   const [input, setinput] = useState('');
-  const [todos, settodos] = useState([]);
+  const [todos, settodos] = useState([] as object | string | any);
 
   return (
     <SafeAreaView style={styles.main}>
@@ -55,7 +55,7 @@ function App(): React.JSX.Element {
             colors={['#4c669f', '#3b5998', '#192f6a']}
             style={styles.linearGradient}></LinearGradient> */}
         </View>
-        <View style={styles.todoList}>
+        <View>
           {todos &&
             todos.map((elem: any) => {
               // const formattedDate = formatDateToDayMonth(elem.date);
@@ -75,17 +75,34 @@ function App(): React.JSX.Element {
                   <View style={styles.todoCardControls}>
                     <Text
                       style={styles.todoDoneBtn}
-                      onPress={() => {
-                        const updatedTodos = todos.map(todo => {
-                          if (todo.title === elem.title) {
-                            return {...todo, completed: true};
-                          }
-                          return todo;
-                        });
+                      onPress={
+                        elem.completed
+                          ? () => {
+                              const updatedTodos = todos.map(
+                                (todo: {title: any}) => {
+                                  if (todo.title === elem.title) {
+                                    return {...todo, completed: false};
+                                  }
+                                  return todo;
+                                },
+                              );
 
-                        settodos(updatedTodos);
-                      }}>
-                      Done
+                              settodos(updatedTodos);
+                            }
+                          : () => {
+                              const updatedTodos = todos.map(
+                                (todo: {title: any}) => {
+                                  if (todo.title === elem.title) {
+                                    return {...todo, completed: true};
+                                  }
+                                  return todo;
+                                },
+                              );
+
+                              settodos(updatedTodos);
+                            }
+                      }>
+                      {elem.completed ? 'Revert' : 'Done'}
                     </Text>
 
                     <Text
@@ -110,26 +127,26 @@ function App(): React.JSX.Element {
           placeholder="Add a task"
           onChangeText={e => setinput(e)}
           defaultValue={input}
-          onSubmitEditing={e => {
+          onSubmitEditing={() => {
             const todo = {
               title: input,
               date: Date.now(),
               completed: false,
             };
-            settodos([...todos, todo]);
-            setinput('');
+            input && settodos([...todos, todo]);
+            input && setinput('');
           }}
         />
         <Text
           style={styles.inputAdd}
-          onPress={e => {
+          onPress={() => {
             const todo = {
               title: input,
               date: Date.now(),
               completed: false,
             };
-            settodos([...todos, todo]);
-            setinput('');
+            input && settodos([...todos, todo]);
+            input && setinput('');
           }}>
           add
         </Text>
@@ -222,9 +239,11 @@ const styles = StyleSheet.create({
   },
   completedTodo: {
     textDecorationLine: 'line-through',
+    color: 'gray',
   },
   inputField: {
     color: 'white',
+    fontSize: 17,
   },
   inputAdd: {
     textTransform: 'uppercase',
