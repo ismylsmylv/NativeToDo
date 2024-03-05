@@ -1,9 +1,8 @@
-import {StatusBar} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  ImageBackground,
   SafeAreaView,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -42,6 +41,15 @@ function formatDateToDayMonth(timestamp: string | number | Date) {
 function App(): React.JSX.Element {
   const [input, setinput] = useState('');
   const [todos, settodos] = useState([] as object | string | any);
+  const [completedCount, setcompletedCount] = useState(0);
+  const [remainCount, setremainCount] = useState(0);
+  useEffect(() => {
+    todos.map((elem: {completed: boolean}) => {
+      elem.completed
+        ? setcompletedCount(completedCount + 1)
+        : setremainCount(remainCount + 1);
+    });
+  }, [todos]);
 
   return (
     <SafeAreaView style={styles.main}>
@@ -52,19 +60,25 @@ function App(): React.JSX.Element {
         translucent={false}
         networkActivityIndicatorVisible={true}
       />
-      <ScrollView>
+      <ScrollView style={styles.back}>
         <View style={styles.backgroundContainer}>
-          <ImageBackground
+          <View
             style={styles.imageHero}
             // source={require('./img/background4.png')}
           >
-            <Text style={styles.backgroundContainerText}>Welcome back</Text>
-          </ImageBackground>
+            <Text style={styles.backgroundContainerText}>All Tasks</Text>
+            {/* <Text style={styles.backgroundContainerSubText}>
+              {completedCount}completed
+            </Text>
+            <Text style={styles.backgroundContainerSubText}>
+              {remainCount}remaining
+            </Text> */}
+          </View>
           {/* <LinearGradient
             colors={['#4c669f', '#3b5998', '#192f6a']}
             style={styles.linearGradient}></LinearGradient> */}
         </View>
-        <View>
+        <View style={styles.todoCardList}>
           {todos &&
             todos.map((elem: any) => {
               // const formattedDate = formatDateToDayMonth(elem.date);
@@ -191,6 +205,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: 'white',
   },
+  backgroundContainerSubText: {
+    marginLeft: 20,
+    fontSize: 16,
+    color: 'white',
+  },
   todoCard: {
     borderColor: '#4260f5',
     borderWidth: 2,
@@ -209,6 +228,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
     fontWeight: '500',
+  },
+  todoCardList: {
+    marginBottom: 60,
+    backgroundColor: 'white',
   },
   todoCardCompleteBtn: {
     alignSelf: 'flex-end',
@@ -264,6 +287,9 @@ const styles = StyleSheet.create({
     color: 'black',
     backgroundColor: 'white',
     borderRadius: 5,
+  },
+  back: {
+    backgroundColor: 'white',
   },
 });
 
