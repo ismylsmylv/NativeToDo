@@ -1,3 +1,4 @@
+import {StatusBar} from 'react-native';
 import React, {useState} from 'react';
 import {
   ImageBackground,
@@ -44,11 +45,19 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.main}>
+      <StatusBar
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor="#4260f5"
+        translucent={false}
+        networkActivityIndicatorVisible={true}
+      />
       <ScrollView>
         <View style={styles.backgroundContainer}>
           <ImageBackground
             style={styles.imageHero}
-            source={require('./img/background4.png')}>
+            // source={require('./img/background4.png')}
+          >
             <Text style={styles.backgroundContainerText}>Welcome back</Text>
           </ImageBackground>
           {/* <LinearGradient
@@ -127,6 +136,7 @@ function App(): React.JSX.Element {
           placeholder="Add a task"
           onChangeText={e => setinput(e)}
           defaultValue={input}
+          placeholderTextColor="white"
           onSubmitEditing={() => {
             const todo = {
               title: input,
@@ -173,6 +183,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',
+    backgroundColor: '#4260f5',
   },
   backgroundContainerText: {
     marginLeft: 20,
