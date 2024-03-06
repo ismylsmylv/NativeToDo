@@ -49,6 +49,7 @@ function App(): React.JSX.Element {
         ? setcompletedCount(completedCount + 1)
         : setremainCount(remainCount + 1);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todos]);
 
   return (
