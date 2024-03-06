@@ -1,3 +1,6 @@
+import {Button} from 'react-native';
+// import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
@@ -39,11 +42,34 @@ function formatDateToDayMonth(timestamp: string | number | Date) {
 }
 
 function App(): React.JSX.Element {
+  let STORAGE_KEY = '@user_input';
+  const saveData = async todoInput => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, todoInput.title);
+      alert('Data successfully saved');
+    } catch (e) {
+      alert('Failed to save the data to the storage');
+    }
+  };
+  const readData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(STORAGE_KEY);
+
+      if (value !== null) {
+        setstored(value);
+      }
+    } catch (e) {
+      alert('Failed to fetch the input from storage');
+    }
+  };
   const [input, setinput] = useState('');
   const [todos, settodos] = useState([] as object | string | any);
   const [completedCount, setcompletedCount] = useState(0);
   const [remainCount, setremainCount] = useState(0);
+  const [stored, setstored] = useState('');
+
   useEffect(() => {
+    readData();
     todos.map((elem: {completed: boolean}) => {
       elem.completed
         ? setcompletedCount(completedCount + 1)
@@ -67,6 +93,7 @@ function App(): React.JSX.Element {
             style={styles.imageHero}
             // source={require('./img/background4.png')}
           >
+            <Text>{}</Text>
             <Text style={styles.backgroundContainerText}>All Tasks</Text>
             {/* <Text style={styles.backgroundContainerSubText}>
               {completedCount}completed
@@ -74,6 +101,7 @@ function App(): React.JSX.Element {
             <Text style={styles.backgroundContainerSubText}>
               {remainCount}remaining
             </Text> */}
+            <Button title={stored + 'stored'} onPress={() => {}} />
           </View>
           {/* <LinearGradient
             colors={['#4c669f', '#3b5998', '#192f6a']}
@@ -158,6 +186,7 @@ function App(): React.JSX.Element {
               date: Date.now(),
               completed: false,
             };
+
             input && settodos([...todos, todo]);
             input && setinput('');
           }}
@@ -170,6 +199,7 @@ function App(): React.JSX.Element {
               date: Date.now(),
               completed: false,
             };
+            saveData(todo);
             input && settodos([...todos, todo]);
             input && setinput('');
           }}>
