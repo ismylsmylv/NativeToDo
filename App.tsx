@@ -46,7 +46,7 @@ function App(): React.JSX.Element {
   const saveData = async todoInput => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todoInput));
-      alert('Data successfully saved');
+      // alert('Data successfully saved');
     } catch (e) {
       alert('Failed to save the data to the storage');
     }
@@ -149,6 +149,8 @@ function App(): React.JSX.Element {
                               );
 
                               settodos(updatedTodos);
+
+                              saveData(updatedTodos);
                             }
                           : () => {
                               const updatedTodos = todos.map(
@@ -161,6 +163,7 @@ function App(): React.JSX.Element {
                               );
 
                               settodos(updatedTodos);
+                              saveData(updatedTodos);
                             }
                       }>
                       {elem.completed ? 'Revert' : 'Done'}
@@ -173,6 +176,7 @@ function App(): React.JSX.Element {
                           (element: any) => element.date != elem.date,
                         );
                         settodos(filteredTodos);
+                        saveData(filteredTodos);
                       }}>
                       Delete
                     </Text>
