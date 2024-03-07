@@ -1,4 +1,3 @@
-import {Button} from 'react-native';
 // import {AsyncStorage} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
@@ -43,11 +42,12 @@ function formatDateToDayMonth(timestamp: string | number | Date) {
 
 function App(): React.JSX.Element {
   let STORAGE_KEY = '@user_input';
-  const saveData = async todoInput => {
+  const saveData = async (todoInput: any[]) => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todoInput));
       // alert('Data successfully saved');
     } catch (e) {
+      // eslint-disable-next-line no-alert
       alert('Failed to save the data to the storage');
     }
   };
@@ -58,9 +58,9 @@ function App(): React.JSX.Element {
 
       if (value !== null) {
         const parsedValue = JSON.parse(value);
-        setstored(JSON.stringify(parsedValue)); // Set the parsed array directly
-        settodos(parsedValue); // Set the parsed array directly
-        // alert('Data successfully fetched');
+        setstored(JSON.stringify(parsedValue));
+        settodos(parsedValue);
+        alert('Data successfully fetched');
       }
     } catch (e) {
       alert('Failed to fetch the input from storage');
@@ -69,8 +69,7 @@ function App(): React.JSX.Element {
 
   const [input, setinput] = useState('');
   const [todos, settodos] = useState([] as object | string | any);
-  const [completedCount, setcompletedCount] = useState(0);
-  const [remainCount, setremainCount] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stored, setstored] = useState('');
 
   useEffect(() => {
@@ -215,9 +214,9 @@ function App(): React.JSX.Element {
             };
             if (input) {
               const updatedTodosArr = [...todos, todo];
-              settodos(updatedTodosArr); // Update state with the new todo
+              settodos(updatedTodosArr);
               setinput('');
-              saveData(updatedTodosArr); // Save the updated array
+              saveData(updatedTodosArr);
             }
           }}>
           add
@@ -228,3 +227,6 @@ function App(): React.JSX.Element {
 }
 
 export default App;
+function alert(_arg0: string) {
+  throw new Error('Function not implemented.');
+}
