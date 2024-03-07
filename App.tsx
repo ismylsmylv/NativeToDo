@@ -46,20 +46,21 @@ function App(): React.JSX.Element {
   const saveData = async todoInput => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todoInput));
-      alert('Data successfully saved' + JSON.stringify(todoInput));
+      alert('Data successfully saved');
     } catch (e) {
       alert('Failed to save the data to the storage');
     }
   };
+
   const readData = async () => {
     try {
       const value = await AsyncStorage.getItem(STORAGE_KEY);
 
       if (value !== null) {
         const parsedValue = JSON.parse(value);
-        setstored([JSON.stringify(parsedValue)]);
-        settodos([JSON.stringify(parsedValue)]);
-        alert(JSON.stringify(parsedValue), 'saved');
+        setstored(JSON.stringify(parsedValue)); // Set the parsed array directly
+        settodos(parsedValue); // Set the parsed array directly
+        // alert('Data successfully fetched');
       }
     } catch (e) {
       alert('Failed to fetch the input from storage');
@@ -93,9 +94,9 @@ function App(): React.JSX.Element {
         networkActivityIndicatorVisible={true}
       />
       <ScrollView style={styles.back}>
-        <Text style={{backgroundColor: 'red', color: 'white'}}>
+        {/* <Text style={{backgroundColor: 'red', color: 'white'}}>
           {stored && stored}stored
-        </Text>
+        </Text> */}
         <View style={styles.backgroundContainer}>
           <View
             style={styles.imageHero}
@@ -196,7 +197,8 @@ function App(): React.JSX.Element {
             };
             input && settodos([...todos, todo]);
             input && setinput('');
-            saveData([...todos, todo]);
+            const updatedTodosArr = [...todos, todo];
+            saveData(updatedTodosArr);
           }}
         />
         <Text
@@ -207,10 +209,12 @@ function App(): React.JSX.Element {
               date: Date.now(),
               completed: false,
             };
-            // saveData([...todos, todo]);
-            input && settodos([...todos, todo]);
-            input && setinput('');
-            saveData([...todos, todo]);
+            if (input) {
+              const updatedTodosArr = [...todos, todo];
+              settodos(updatedTodosArr); // Update state with the new todo
+              setinput('');
+              saveData(updatedTodosArr); // Save the updated array
+            }
           }}>
           add
         </Text>
