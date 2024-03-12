@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // import {AsyncStorage} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
@@ -7,14 +8,21 @@ import {
   StatusBar,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import styles from './styles';
+// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+  faArrowRotateLeft,
+  faCirclePlus,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
+import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+// import {faCheck} from '@fortawesome/free-solid-svg-icons';
 function formatDateToDayMonth(timestamp: string | number | Date) {
-  // Convert timestamp to milliseconds by multiplying by 1000
-  const date = new Date(timestamp); // Assuming the timestamp is in seconds
-
-  // Array of month names
+  const date = new Date(timestamp);
   const monthNames = [
     'January',
     'February',
@@ -29,12 +37,8 @@ function formatDateToDayMonth(timestamp: string | number | Date) {
     'November',
     'December',
   ];
-
-  // Get the day and month components of the date
   const day = date.getDate();
   const monthIndex = date.getMonth();
-
-  // Construct the formatted date string
   const formattedDate = `${day} ${monthNames[monthIndex]}`;
 
   return formattedDate;
@@ -47,8 +51,7 @@ function App(): React.JSX.Element {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todoInput));
       // alert('Data successfully saved');
     } catch (e) {
-      // eslint-disable-next-line no-alert
-      alert('Failed to save the data to the storage');
+      // alert('Failed to save the data to the storage');
     }
   };
 
@@ -60,10 +63,10 @@ function App(): React.JSX.Element {
         const parsedValue = JSON.parse(value);
         setstored(JSON.stringify(parsedValue));
         settodos(parsedValue);
-        alert('Data successfully fetched');
+        // alert('Data successfully fetched');
       }
     } catch (e) {
-      alert('Failed to fetch the input from storage');
+      // alert('Failed to fetch the input from storage');
     }
   };
 
@@ -74,13 +77,6 @@ function App(): React.JSX.Element {
 
   useEffect(() => {
     readData();
-    // todos &&
-    //   todos.map((elem: {completed: boolean}) => {
-    //     elem.completed
-    //       ? setcompletedCount(completedCount + 1)
-    //       : setremainCount(remainCount + 1);
-    //   });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -93,34 +89,24 @@ function App(): React.JSX.Element {
         networkActivityIndicatorVisible={true}
       />
       <ScrollView style={styles.back}>
-        {/* <Text style={{backgroundColor: 'red', color: 'white'}}>
-          {stored && stored}stored
-        </Text> */}
         <View style={styles.backgroundContainer}>
-          <View
-            style={styles.imageHero}
-            // source={require('./img/background4.png')}
-          >
+          <View style={styles.imageHero}>
             <Text>{}</Text>
             <Text style={styles.backgroundContainerText}>All Tasks</Text>
-            {/* <Text style={styles.backgroundContainerSubText}>
-              {completedCount}completed
-            </Text>
-            <Text style={styles.backgroundContainerSubText}>
-              {remainCount}remaining
-            </Text> */}
-            {/* <Button title={stored + 'stored'} onPress={() => {}} /> */}
           </View>
-          {/* <LinearGradient
-            colors={['#4c669f', '#3b5998', '#192f6a']}
-            style={styles.linearGradient}></LinearGradient> */}
         </View>
         <View style={styles.todoCardList}>
           {todos &&
             todos.map((elem: any) => {
               // const formattedDate = formatDateToDayMonth(elem.date);
               return (
-                <View style={styles.todoCard} key={elem.date + 1}>
+                <View
+                  style={
+                    elem.completed
+                      ? [styles.todoCard, {borderColor: '#ababab'}]
+                      : [styles.todoCard, {borderColor: '#4260f5'}]
+                  }
+                  key={elem.date + 1}>
                   <View>
                     <Text
                       style={
@@ -148,7 +134,6 @@ function App(): React.JSX.Element {
                               );
 
                               settodos(updatedTodos);
-
                               saveData(updatedTodos);
                             }
                           : () => {
@@ -165,7 +150,21 @@ function App(): React.JSX.Element {
                               saveData(updatedTodos);
                             }
                       }>
-                      {elem.completed ? 'Revert' : 'Done'}
+                      {elem.completed ? (
+                        <FontAwesomeIcon
+                          icon={faArrowRotateLeft}
+                          style={{color: '#0cb300'}}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          style={{color: '#0cb300'}}
+                        />
+                        // <FontAwesomeIcon
+                        //   icon="fa-solid fa-check"
+                        //   style={{color: '#0cb300'}}
+                        // />
+                      )}
                     </Text>
 
                     <Text
@@ -177,7 +176,10 @@ function App(): React.JSX.Element {
                         settodos(filteredTodos);
                         saveData(filteredTodos);
                       }}>
-                      Delete
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        style={{color: '#ff0033'}}
+                      />
                     </Text>
                   </View>
                 </View>
@@ -204,7 +206,7 @@ function App(): React.JSX.Element {
             saveData(updatedTodosArr);
           }}
         />
-        <Text
+        <TouchableOpacity
           style={styles.inputAdd}
           onPress={() => {
             const todo = {
@@ -219,14 +221,16 @@ function App(): React.JSX.Element {
               saveData(updatedTodosArr);
             }
           }}>
-          add
-        </Text>
+          {/* add */}
+          <FontAwesomeIcon
+            icon={faCirclePlus}
+            style={{color: '#ffffff'}}
+            size={20}
+          />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
 
 export default App;
-function alert(_arg0: string) {
-  throw new Error('Function not implemented.');
-}

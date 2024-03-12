@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     todoCard: {
-        borderColor: '#4260f5',
         borderWidth: 2,
         margin: 10,
         padding: 10,
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     },
     todoDoneBtn: {
         color: 'green',
-        marginRight: 10,
+        marginRight: 20,
     },
     todoDeleteBtn: {
         color: 'red',
@@ -99,15 +98,17 @@ const styles = StyleSheet.create({
     inputField: {
         color: 'white',
         fontSize: 17,
+        flex: 1
     },
     inputAdd: {
-        textTransform: 'uppercase',
-        fontWeight: '700',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        color: 'black',
-        backgroundColor: 'white',
-        borderRadius: 5,
+        // textTransform: 'uppercase',
+        // fontWeight: '700',
+        // paddingHorizontal: 10,
+        // paddingVertical: 5,
+        // color: 'black',
+        // backgroundColor: 'white',
+        // borderRadius: 5,
+        // height: 30, width: 40
     },
     back: {
         backgroundColor: 'white',
