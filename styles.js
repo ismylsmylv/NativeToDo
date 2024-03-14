@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         overflowY: 'scroll',
-        height: 'auto',
     },
     todoContent: {
+        marginRight: 15,
         flex: 1,
-        marginRight: 15
+        textAlign: 'left',
     },
     todoCardTitle: {
         alignSelf: 'flex-start',

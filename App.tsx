@@ -3,6 +3,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -13,14 +14,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-  faArrowRotateLeft,
-  faCirclePlus,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
-import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
+import {faCirclePlus, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {Image} from 'react-native';
 // import {faCheck} from '@fortawesome/free-solid-svg-icons';
 function formatDateToDayMonth(timestamp: string | number | Date) {
   const date = new Date(timestamp);
@@ -90,6 +85,7 @@ function App(): React.JSX.Element {
     readData();
     // setremainCount(stored);
   }, []);
+  const [isSelected, setSelection] = useState(false);
 
   return (
     <SafeAreaView style={styles.main}>
@@ -191,56 +187,6 @@ function App(): React.JSX.Element {
                       <Text>from {formatDateToDayMonth(elem.date)}</Text>
                     </View>
                     <View style={styles.todoCardControls}>
-                      <Text
-                        style={styles.todoDoneBtn}
-                        onPress={
-                          elem.completed
-                            ? () => {
-                                const updatedTodos = todos.map(
-                                  (todo: {title: any}) => {
-                                    if (todo.title === elem.title) {
-                                      return {...todo, completed: false};
-                                    }
-                                    return todo;
-                                  },
-                                );
-
-                                settodos(updatedTodos);
-                                saveData(updatedTodos);
-                                setremainCount(remainCount + 1);
-                              }
-                            : () => {
-                                const updatedTodos = todos.map(
-                                  (todo: {title: any}) => {
-                                    if (todo.title === elem.title) {
-                                      return {...todo, completed: true};
-                                    }
-                                    return todo;
-                                  },
-                                );
-
-                                settodos(updatedTodos);
-                                saveData(updatedTodos);
-                                setremainCount(remainCount - 1);
-                              }
-                        }>
-                        {elem.completed ? (
-                          <FontAwesomeIcon
-                            icon={faArrowRotateLeft}
-                            style={{color: '#2596be'}}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{color: '#2596be'}}
-                          />
-                          // <FontAwesomeIcon
-                          //   icon="fa-solid fa-check"
-                          //   style={{color: '#0cb300'}}
-                          // />
-                        )}
-                      </Text>
-
                       <Text
                         style={styles.todoDeleteBtn}
                         onPress={() => {
