@@ -16,8 +16,9 @@ const styles = StyleSheet.create({
         height: 100,
         flex: 1,
         display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
         backgroundColor: '#4260f5',
     },
     backgroundContainerText: {
@@ -25,6 +26,10 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '500',
         color: 'white',
+    },
+    backgroundContainerCountText: {
+        color: 'white',
+        marginHorizontal: 20
     },
     backgroundContainerSubText: {
         marginLeft: 20,

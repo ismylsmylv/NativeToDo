@@ -65,6 +65,13 @@ function App(): React.JSX.Element {
         setstored(JSON.stringify(parsedValue));
         settodos(parsedValue);
         // alert('Data successfully fetched');
+        parsedValue.map(elem => {
+          console.log(elem);
+          if (!elem.completed) {
+            return setremainCount(remainCount + 1);
+          }
+          // !elem.completed &&
+        });
       }
     } catch (e) {
       // alert('Failed to fetch the input from storage');
@@ -75,9 +82,11 @@ function App(): React.JSX.Element {
   const [todos, settodos] = useState([] as object | string | any);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stored, setstored] = useState('');
-
+  const [remainCount, setremainCount] = useState(0);
   useEffect(() => {
     readData();
+
+    // setremainCount(stored);
   }, []);
 
   return (
@@ -92,8 +101,12 @@ function App(): React.JSX.Element {
       <ScrollView style={styles.back}>
         <View style={styles.backgroundContainer}>
           <View style={styles.imageHero}>
-            <Text>{}</Text>
-            <Text style={styles.backgroundContainerText}>All Tasks</Text>
+            <Text style={styles.backgroundContainerText}>Tasks</Text>
+            {
+              <Text style={styles.backgroundContainerCountText}>
+                {remainCount != 0 && `${remainCount} remaining`}
+              </Text>
+            }
           </View>
         </View>
         {todos && todos.length > 0 ? (
@@ -137,6 +150,7 @@ function App(): React.JSX.Element {
 
                                 settodos(updatedTodos);
                                 saveData(updatedTodos);
+                                setremainCount(remainCount + 1);
                               }
                             : () => {
                                 const updatedTodos = todos.map(
@@ -150,6 +164,7 @@ function App(): React.JSX.Element {
 
                                 settodos(updatedTodos);
                                 saveData(updatedTodos);
+                                setremainCount(remainCount - 1);
                               }
                         }>
                         {elem.completed ? (
@@ -177,6 +192,7 @@ function App(): React.JSX.Element {
                           );
                           settodos(filteredTodos);
                           saveData(filteredTodos);
+                          setremainCount(remainCount - 1);
                         }}>
                         <FontAwesomeIcon
                           icon={faTrash}
@@ -231,6 +247,7 @@ function App(): React.JSX.Element {
               settodos(updatedTodosArr);
               setinput('');
               saveData(updatedTodosArr);
+              setremainCount(remainCount + 1);
             }
           }}>
           {/* add */}
