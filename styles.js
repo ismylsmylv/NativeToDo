@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },
     backgroundContainerCountText: {
         color: 'white',
-        marginHorizontal: 20
+        marginHorizontal: 20,
     },
     backgroundContainerSubText: {
         marginLeft: 20,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 'auto',
         justifyContent: 'space-between',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     inputBar: {
         flex: 1,
@@ -125,13 +125,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
+        color: 'gray'
     },
     placeholderImg: {
         height: 100,
         width: 100,
         objectFit: 'cover',
         marginVertical: 20,
-        marginTop: 80
+        marginTop: 80,
+    },
+    placeholderTexts: {
+        color: 'gray'
     }
 });
 

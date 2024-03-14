@@ -65,13 +65,16 @@ function App(): React.JSX.Element {
         setstored(JSON.stringify(parsedValue));
         settodos(parsedValue);
         // alert('Data successfully fetched');
-        parsedValue.map(elem => {
+        let counter = 0;
+        parsedValue.map((elem: {completed: boolean}) => {
           console.log(elem);
           if (!elem.completed) {
-            return setremainCount(remainCount + 1);
+            counter++;
           }
           // !elem.completed &&
         });
+        console.log(counter, 'remain');
+        setremainCount(counter);
       }
     } catch (e) {
       // alert('Failed to fetch the input from storage');
@@ -85,7 +88,6 @@ function App(): React.JSX.Element {
   const [remainCount, setremainCount] = useState(0);
   useEffect(() => {
     readData();
-
     // setremainCount(stored);
   }, []);
 
@@ -104,7 +106,10 @@ function App(): React.JSX.Element {
             <Text style={styles.backgroundContainerText}>Tasks</Text>
             {
               <Text style={styles.backgroundContainerCountText}>
-                {remainCount != 0 && `${remainCount} remaining`}
+                {remainCount !== 0
+                  ? `${remainCount} remaining`
+                  : todos &&
+                    todos.length > 0 && <Text>All tasks completed</Text>}
               </Text>
             }
           </View>
@@ -192,7 +197,7 @@ function App(): React.JSX.Element {
                           );
                           settodos(filteredTodos);
                           saveData(filteredTodos);
-                          setremainCount(remainCount - 1);
+                          !elem.completed && setremainCount(remainCount - 1);
                         }}>
                         <FontAwesomeIcon
                           icon={faTrash}
@@ -210,8 +215,8 @@ function App(): React.JSX.Element {
               style={styles.placeholderImg}
               source={require('./img/main.png')}
             />
-            <Text>Nothing to see here!</Text>
-            <Text> Enjoy the productivity!</Text>
+            <Text style={styles.placeholderTexts}>Nothing to see here</Text>
+            <Text style={styles.placeholderTexts}>Enjoy the productivity!</Text>
           </View>
         )}
       </ScrollView>
