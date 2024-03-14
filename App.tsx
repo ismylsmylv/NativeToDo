@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {Image} from 'react-native';
 // import {faCheck} from '@fortawesome/free-solid-svg-icons';
 function formatDateToDayMonth(timestamp: string | number | Date) {
   const date = new Date(timestamp);
@@ -95,97 +96,108 @@ function App(): React.JSX.Element {
             <Text style={styles.backgroundContainerText}>All Tasks</Text>
           </View>
         </View>
-        <View style={styles.todoCardList}>
-          {todos &&
-            todos.map((elem: any) => {
-              // const formattedDate = formatDateToDayMonth(elem.date);
-              return (
-                <View
-                  style={
-                    elem.completed
-                      ? [styles.todoCard, {borderColor: '#ababab'}]
-                      : [styles.todoCard, {borderColor: '#4260f5'}]
-                  }
-                  key={elem.date + 1}>
-                  <View>
-                    <Text
-                      style={
-                        elem.completed
-                          ? [styles.todoCardTitle, styles.completedTodo]
-                          : [styles.todoCardTitle]
-                      }>
-                      {elem.title}
-                    </Text>
-                    <Text>from {formatDateToDayMonth(elem.date)}</Text>
-                  </View>
-                  <View style={styles.todoCardControls}>
-                    <Text
-                      style={styles.todoDoneBtn}
-                      onPress={
-                        elem.completed
-                          ? () => {
-                              const updatedTodos = todos.map(
-                                (todo: {title: any}) => {
-                                  if (todo.title === elem.title) {
-                                    return {...todo, completed: false};
-                                  }
-                                  return todo;
-                                },
-                              );
+        {todos && todos.length > 0 ? (
+          <View style={styles.todoCardList}>
+            {todos &&
+              todos.map((elem: any) => {
+                // const formattedDate = formatDateToDayMonth(elem.date);
+                return (
+                  <View
+                    style={
+                      elem.completed
+                        ? [styles.todoCard, {borderColor: '#ababab'}]
+                        : [styles.todoCard, {borderColor: '#4260f5'}]
+                    }
+                    key={elem.date + 1}>
+                    <View>
+                      <Text
+                        style={
+                          elem.completed
+                            ? [styles.todoCardTitle, styles.completedTodo]
+                            : [styles.todoCardTitle]
+                        }>
+                        {elem.title}
+                      </Text>
+                      <Text>from {formatDateToDayMonth(elem.date)}</Text>
+                    </View>
+                    <View style={styles.todoCardControls}>
+                      <Text
+                        style={styles.todoDoneBtn}
+                        onPress={
+                          elem.completed
+                            ? () => {
+                                const updatedTodos = todos.map(
+                                  (todo: {title: any}) => {
+                                    if (todo.title === elem.title) {
+                                      return {...todo, completed: false};
+                                    }
+                                    return todo;
+                                  },
+                                );
 
-                              settodos(updatedTodos);
-                              saveData(updatedTodos);
-                            }
-                          : () => {
-                              const updatedTodos = todos.map(
-                                (todo: {title: any}) => {
-                                  if (todo.title === elem.title) {
-                                    return {...todo, completed: true};
-                                  }
-                                  return todo;
-                                },
-                              );
+                                settodos(updatedTodos);
+                                saveData(updatedTodos);
+                              }
+                            : () => {
+                                const updatedTodos = todos.map(
+                                  (todo: {title: any}) => {
+                                    if (todo.title === elem.title) {
+                                      return {...todo, completed: true};
+                                    }
+                                    return todo;
+                                  },
+                                );
 
-                              settodos(updatedTodos);
-                              saveData(updatedTodos);
-                            }
-                      }>
-                      {elem.completed ? (
+                                settodos(updatedTodos);
+                                saveData(updatedTodos);
+                              }
+                        }>
+                        {elem.completed ? (
+                          <FontAwesomeIcon
+                            icon={faArrowRotateLeft}
+                            style={{color: '#0cb300'}}
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            style={{color: '#0cb300'}}
+                          />
+                          // <FontAwesomeIcon
+                          //   icon="fa-solid fa-check"
+                          //   style={{color: '#0cb300'}}
+                          // />
+                        )}
+                      </Text>
+
+                      <Text
+                        style={styles.todoDeleteBtn}
+                        onPress={() => {
+                          const filteredTodos = todos.filter(
+                            (element: any) => element.date != elem.date,
+                          );
+                          settodos(filteredTodos);
+                          saveData(filteredTodos);
+                        }}>
                         <FontAwesomeIcon
-                          icon={faArrowRotateLeft}
-                          style={{color: '#0cb300'}}
+                          icon={faTrash}
+                          style={{color: '#ff0033'}}
                         />
-                      ) : (
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          style={{color: '#0cb300'}}
-                        />
-                        // <FontAwesomeIcon
-                        //   icon="fa-solid fa-check"
-                        //   style={{color: '#0cb300'}}
-                        // />
-                      )}
-                    </Text>
-
-                    <Text
-                      style={styles.todoDeleteBtn}
-                      onPress={() => {
-                        const filteredTodos = todos.filter(
-                          (element: any) => element.date != elem.date,
-                        );
-                        settodos(filteredTodos);
-                        saveData(filteredTodos);
-                      }}>
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        style={{color: '#ff0033'}}
-                      />
-                    </Text>
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              );
-            })}
-        </View>
+                );
+              })}
+          </View>
+        ) : (
+          <View style={styles.placeholder}>
+            <Image
+              style={styles.placeholderImg}
+              source={require('./img/main.png')}
+            />
+            <Text>Nothing to see here!</Text>
+            <Text> Enjoy the productivity!</Text>
+          </View>
+        )}
       </ScrollView>
       <View style={styles.inputBar}>
         <TextInput
@@ -193,7 +205,7 @@ function App(): React.JSX.Element {
           placeholder="Add a task"
           onChangeText={e => setinput(e)}
           defaultValue={input}
-          placeholderTextColor="white"
+          placeholderTextColor="#dedede"
           onSubmitEditing={() => {
             const todo = {
               title: input,

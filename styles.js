@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 'auto',
         justifyContent: 'space-between',
+        backgroundColor: 'white'
     },
     inputBar: {
         flex: 1,
@@ -98,7 +99,8 @@ const styles = StyleSheet.create({
     inputField: {
         color: 'white',
         fontSize: 17,
-        flex: 1
+        flex: 1,
+        // opacity: 0.8
     },
     inputAdd: {
         // textTransform: 'uppercase',
@@ -113,6 +115,19 @@ const styles = StyleSheet.create({
     back: {
         backgroundColor: 'white',
     },
+    placeholder: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+    },
+    placeholderImg: {
+        height: 100,
+        width: 100,
+        objectFit: 'cover',
+        marginVertical: 20,
+        marginTop: 80
+    }
 });
 
 export default styles;
