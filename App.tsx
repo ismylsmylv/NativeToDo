@@ -117,7 +117,38 @@ function App(): React.JSX.Element {
               todos.map((elem: any) => {
                 // const formattedDate = formatDateToDayMonth(elem.date);
                 return (
-                  <View
+                  <TouchableOpacity
+                    onPress={
+                      elem.completed
+                        ? () => {
+                            const updatedTodos = todos.map(
+                              (todo: {title: any}) => {
+                                if (todo.title === elem.title) {
+                                  return {...todo, completed: false};
+                                }
+                                return todo;
+                              },
+                            );
+
+                            settodos(updatedTodos);
+                            saveData(updatedTodos);
+                            setremainCount(remainCount + 1);
+                          }
+                        : () => {
+                            const updatedTodos = todos.map(
+                              (todo: {title: any}) => {
+                                if (todo.title === elem.title) {
+                                  return {...todo, completed: true};
+                                }
+                                return todo;
+                              },
+                            );
+
+                            settodos(updatedTodos);
+                            saveData(updatedTodos);
+                            setremainCount(remainCount - 1);
+                          }
+                    }
                     style={
                       elem.completed
                         ? [styles.todoCard, {borderColor: '#ababab'}]
@@ -125,6 +156,11 @@ function App(): React.JSX.Element {
                     }
                     key={elem.date + 1}>
                     <TouchableOpacity
+                      style={
+                        elem.completed
+                          ? [styles.todoCheckBox, {borderColor: '#ababab'}]
+                          : [styles.todoCheckBox, {borderColor: '#4260f5'}]
+                      }
                       onPress={
                         elem.completed
                           ? () => {
@@ -155,11 +191,6 @@ function App(): React.JSX.Element {
                               saveData(updatedTodos);
                               setremainCount(remainCount - 1);
                             }
-                      }
-                      style={
-                        elem.completed
-                          ? [styles.todoCheckBox, {borderColor: '#ababab'}]
-                          : [styles.todoCheckBox, {borderColor: '#4260f5'}]
                       }>
                       <View
                         style={
@@ -184,7 +215,14 @@ function App(): React.JSX.Element {
                         }>
                         {elem.title}
                       </Text>
-                      <Text>from {formatDateToDayMonth(elem.date)}</Text>
+                      <Text
+                        style={
+                          elem.completed
+                            ? {color: '#ababab'}
+                            : {color: '#2596be'}
+                        }>
+                        from {formatDateToDayMonth(elem.date)}
+                      </Text>
                     </View>
                     <View style={styles.todoCardControls}>
                       <Text
@@ -203,7 +241,7 @@ function App(): React.JSX.Element {
                         />
                       </Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 );
               })}
           </View>
