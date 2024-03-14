@@ -46,7 +46,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        overflow: 'scroll',
+        overflowY: 'scroll',
+        height: 'auto',
+    },
+    todoContent: {
+        flex: 1,
+        marginRight: 15
     },
     todoCardTitle: {
         alignSelf: 'flex-start',
@@ -89,6 +94,8 @@ const styles = StyleSheet.create({
     todoCardControls: {
         display: 'flex',
         flexDirection: 'row',
+        overflowY: 'scroll',
+
     },
     todoDoneBtn: {
         color: 'green',

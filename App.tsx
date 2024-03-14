@@ -114,6 +114,7 @@ function App(): React.JSX.Element {
             }
           </View>
         </View>
+
         {todos && todos.length > 0 ? (
           <View style={styles.todoCardList}>
             {todos &&
@@ -127,7 +128,7 @@ function App(): React.JSX.Element {
                         : [styles.todoCard, {borderColor: '#4260f5'}]
                     }
                     key={elem.date + 1}>
-                    <View>
+                    <View style={styles.todoContent}>
                       <Text
                         style={
                           elem.completed
@@ -175,12 +176,12 @@ function App(): React.JSX.Element {
                         {elem.completed ? (
                           <FontAwesomeIcon
                             icon={faArrowRotateLeft}
-                            style={{color: '#0cb300'}}
+                            style={{color: '#2596be'}}
                           />
                         ) : (
                           <FontAwesomeIcon
                             icon={faCheck}
-                            style={{color: '#0cb300'}}
+                            style={{color: '#2596be'}}
                           />
                           // <FontAwesomeIcon
                           //   icon="fa-solid fa-check"
@@ -201,7 +202,7 @@ function App(): React.JSX.Element {
                         }}>
                         <FontAwesomeIcon
                           icon={faTrash}
-                          style={{color: '#ff0033'}}
+                          style={{color: '#2596be'}}
                         />
                       </Text>
                     </View>
