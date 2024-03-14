@@ -295,7 +295,7 @@ function App(): React.JSX.Element {
           <FontAwesomeIcon
             icon={faCirclePlus}
             style={{color: '#ffffff'}}
-            size={20}
+            size={30}
           />
         </TouchableOpacity>
       </View>
