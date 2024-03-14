@@ -128,6 +128,57 @@ function App(): React.JSX.Element {
                         : [styles.todoCard, {borderColor: '#4260f5'}]
                     }
                     key={elem.date + 1}>
+                    <TouchableOpacity
+                      onPress={
+                        elem.completed
+                          ? () => {
+                              const updatedTodos = todos.map(
+                                (todo: {title: any}) => {
+                                  if (todo.title === elem.title) {
+                                    return {...todo, completed: false};
+                                  }
+                                  return todo;
+                                },
+                              );
+
+                              settodos(updatedTodos);
+                              saveData(updatedTodos);
+                              setremainCount(remainCount + 1);
+                            }
+                          : () => {
+                              const updatedTodos = todos.map(
+                                (todo: {title: any}) => {
+                                  if (todo.title === elem.title) {
+                                    return {...todo, completed: true};
+                                  }
+                                  return todo;
+                                },
+                              );
+
+                              settodos(updatedTodos);
+                              saveData(updatedTodos);
+                              setremainCount(remainCount - 1);
+                            }
+                      }
+                      style={
+                        elem.completed
+                          ? [styles.todoCheckBox, {borderColor: '#ababab'}]
+                          : [styles.todoCheckBox, {borderColor: '#4260f5'}]
+                      }>
+                      <View
+                        style={
+                          elem.completed && [
+                            styles.todoCheckBoxDot,
+                            {backgroundColor: '#ababab'},
+                          ]
+                          // : [
+                          //     styles.todoCheckBoxDot,
+                          //     {backgroundColor: '#4260f5'},
+                          //   ]
+                        }
+                      />
+                    </TouchableOpacity>
+
                     <View style={styles.todoContent}>
                       <Text
                         style={

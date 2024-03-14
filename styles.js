@@ -143,6 +143,27 @@ const styles = StyleSheet.create({
     },
     placeholderTexts: {
         color: 'gray'
+    },
+    todoCheckBox: {
+        marginRight: 15,
+        height: 20,
+        width: 20,
+        // borderColor: '#2596be',
+        borderWidth: 1,
+        display: 'flex',
+        alignItems: 'center',
+        borderRadius: 60,
+        justifyContent: 'center'
+    },
+    todoCheckBoxDot: {
+        height: 10,
+        width: 10,
+        borderRadius: 60,
+        borderWidth: 1,
+        borderColor: 'transparent',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });
 
