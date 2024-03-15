@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
         // position: 'absolute',
         // top: 0,
         width: '100%',
-        flex: 1,
-        height: 200,
+        // flex: 1,
+        height: 90,
         zIndex: 100
         // position: 'absolute'
     },
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     todoCard: {
         borderWidth: 2,
         margin: 10,
+        marginTop: 0,
         padding: 10,
         borderRadius: 5,
         flex: 1,
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         overflowY: 'scroll',
         position: 'relative',
+        backgroundColor: 'white'
     },
     todoContent: {
         marginRight: 15,
@@ -179,15 +181,16 @@ const styles = StyleSheet.create({
     },
     rightControl: {
         position: 'absolute',
-        right: 0,
-        top: 0
+        right: 30,
+        top: 25,
+        overflow: 'hidden'
     },
     todoScroll: {
-        marginBottom: 40
+        // marginBottom: 40
     },
     swipeList: {
         // paddingBottom: 60
-        marginBottom: 90
+        position: 'relative'
     }
 });
 

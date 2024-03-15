@@ -3,17 +3,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {
-  Image,
   RefreshControl,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   Text,
   TextInput,
-  Touchable,
-  TouchableHighlight,
   TouchableOpacity,
-  TouchableOpacityBase,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import styles from './styles';
@@ -92,7 +88,6 @@ function App(): React.JSX.Element {
     readData();
     // setremainCount(stored);
   }, []);
-  const [isSelected, setSelection] = useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -130,52 +125,55 @@ function App(): React.JSX.Element {
           }
         </View>
       </View>
-      <View
-      //  style={styles.swipeList}
-      >
-        <SwipeListView
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              style={[styles.refresh, styles.swipeList]}
-            />
-          }
-          data={todos}
-          style={styles.todoScroll}
-          renderItem={(data: any, rowMap) => (
-            <TouchableOpacity
+      <SwipeListView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            style={[styles.refresh, styles.swipeList]}
+          />
+        }
+        data={todos}
+        style={styles.todoScroll}
+        renderItem={(data: any) => (
+          <TouchableWithoutFeedback
+            // style={
+            //   data.item.completed
+            //     ? [styles.todoCard, {borderColor: '#ababab'}]
+            //     : [styles.todoCard, {borderColor: '#4260f5'}]
+            // }
+            onPress={
+              data.item.completed
+                ? () => {
+                    const updatedTodos = todos.map((todo: {title: any}) => {
+                      if (todo.title === data.item.title) {
+                        return {...todo, completed: false};
+                      }
+                      return todo;
+                    });
+
+                    settodos(updatedTodos);
+                    saveData(updatedTodos);
+                    setremainCount(remainCount + 1);
+                  }
+                : () => {
+                    const updatedTodos = todos.map((todo: {title: any}) => {
+                      if (todo.title === data.item.title) {
+                        return {...todo, completed: true};
+                      }
+                      return todo;
+                    });
+
+                    settodos(updatedTodos);
+                    saveData(updatedTodos);
+                    setremainCount(remainCount - 1);
+                  }
+            }>
+            <View
               style={
                 data.item.completed
                   ? [styles.todoCard, {borderColor: '#ababab'}]
                   : [styles.todoCard, {borderColor: '#4260f5'}]
-              }
-              onPress={
-                data.item.completed
-                  ? () => {
-                      const updatedTodos = todos.map((todo: {title: any}) => {
-                        if (todo.title === data.item.title) {
-                          return {...todo, completed: false};
-                        }
-                        return todo;
-                      });
-
-                      settodos(updatedTodos);
-                      saveData(updatedTodos);
-                      setremainCount(remainCount + 1);
-                    }
-                  : () => {
-                      const updatedTodos = todos.map((todo: {title: any}) => {
-                        if (todo.title === data.item.title) {
-                          return {...todo, completed: true};
-                        }
-                        return todo;
-                      });
-
-                      settodos(updatedTodos);
-                      saveData(updatedTodos);
-                      setremainCount(remainCount - 1);
-                    }
               }>
               <View style={styles.todoContent}>
                 <Text
@@ -195,19 +193,29 @@ function App(): React.JSX.Element {
                   from {formatDateToDayMonth(data.item.date)}
                 </Text>
               </View>
-            </TouchableOpacity>
-          )}
-          renderHiddenItem={(data, rowMap) => (
-            <View style={styles.rowBack}>
-              {/* <Text>Left</Text> */}
-              <Text style={styles.rightControl}>Right</Text>
             </View>
-          )}
-          leftOpenValue={75}
-          rightOpenValue={-75}
-          disableRightSwipe={true}
-        />
-      </View>
+          </TouchableWithoutFeedback>
+        )}
+        renderHiddenItem={(data: any) => (
+          <View style={[styles.todoCardControls, styles.rightControl]}>
+            <Text
+              style={styles.todoDeleteBtn}
+              onPress={() => {
+                const filteredTodos = todos.filter(
+                  (element: any) => element.date != data.item.date,
+                );
+                settodos(filteredTodos);
+                saveData(filteredTodos);
+                !data.item.completed && setremainCount(remainCount - 1);
+              }}>
+              <FontAwesomeIcon icon={faTrash} style={{color: '#2596be'}} />
+            </Text>
+          </View>
+        )}
+        leftOpenValue={75}
+        rightOpenValue={-75}
+        disableRightSwipe={true}
+      />
       {/* {todos && todos.length > 0 ? (
           <View style={styles.todoCardList}>
             {todos &&
