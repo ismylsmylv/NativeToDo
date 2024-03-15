@@ -383,7 +383,7 @@ function App(): React.JSX.Element {
             </>
           )}
           // leftOpenValue={85}
-          rightOpenValue={-85}
+          rightOpenValue={-65}
           // disableRightSwipe={true}
           leftActivationValue={100}
           leftActionValue={0}
