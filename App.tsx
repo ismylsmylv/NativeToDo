@@ -148,9 +148,9 @@ function App(): React.JSX.Element {
               (todo: {date: string}) => todo.date == rowKey,
             );
             if (item) {
-              console.log(item);
+              // console.log(item);
               // console.log('Swiped', item.title);
-              item.completed ? console.log('item') : console.log('not item');
+              // item.completed ? console.log('item') : console.log('not item');
 
               if (item.completed) {
                 const updatedTodos = todos.map((todo: {title: any}) => {
@@ -164,7 +164,7 @@ function App(): React.JSX.Element {
                 saveData(updatedTodos);
                 setremainCount(remainCount + 1);
                 closeRow(rowMap, item.key);
-                console.log('undoes');
+                // console.log('undoes');
                 rowMap[rowKey].closeRow();
               } else {
                 const updatedTodos = todos.map((todo: {title: any}) => {
@@ -177,7 +177,7 @@ function App(): React.JSX.Element {
                 settodos(updatedTodos);
                 saveData(updatedTodos);
                 setremainCount(remainCount - 1);
-                console.log('undoes');
+                // console.log('undoes');
                 rowMap[rowKey].closeRow();
               }
             }
@@ -277,7 +277,7 @@ function App(): React.JSX.Element {
           renderHiddenItem={(data: any) => (
             <>
               <View style={[styles.todoCardControls, styles.rightControl]}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={
                     data.item.completed
                       ? () => {
@@ -320,7 +320,7 @@ function App(): React.JSX.Element {
                       style={{color: '#2596be', marginRight: 15}}
                     />
                   )}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <Text
                   style={styles.todoDeleteBtn}
                   onPress={() => {
