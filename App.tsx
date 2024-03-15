@@ -11,6 +11,7 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Vibration,
   View,
 } from 'react-native';
 import styles from './styles';
@@ -147,6 +148,7 @@ function App(): React.JSX.Element {
             const item = todos.find(
               (todo: {date: string}) => todo.date == rowKey,
             );
+            // Vibration.vibrate(1000);
             if (item) {
               // console.log(item);
               // console.log('Swiped', item.title);
