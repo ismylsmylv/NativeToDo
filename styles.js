@@ -187,7 +187,9 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     todoScroll: {
-        // marginBottom: 40
+        // marginBottom: 60,
+        paddingTop: 10,
+        marginBottom: 55
     },
     swipeList: {
         // paddingBottom: 60
