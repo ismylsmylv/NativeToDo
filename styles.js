@@ -143,14 +143,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
-        color: 'gray'
+        color: 'gray',
     },
     placeholderImg: {
         height: 100,
         width: 100,
         objectFit: 'cover',
         marginVertical: 20,
-        marginTop: 80,
+        // marginTop: 80,
+        zIndex: 100
     },
     placeholderTexts: {
         color: 'gray'
