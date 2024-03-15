@@ -186,6 +186,12 @@ const styles = StyleSheet.create({
         top: 25,
         overflow: 'hidden'
     },
+    leftControl: {
+        position: 'absolute',
+        left: 30,
+        top: 25,
+        overflow: 'hidden'
+    },
     todoScroll: {
         // marginBottom: 60,
         paddingTop: 10,

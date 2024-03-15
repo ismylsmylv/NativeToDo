@@ -22,7 +22,7 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {SwipeListView} from 'react-native-swipe-list-view';
+import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
 // import {faCheck} from '@fortawesome/free-solid-svg-icons';
 function formatDateToDayMonth(timestamp: string | number | Date) {
   const date = new Date(timestamp);
@@ -101,6 +101,14 @@ function App(): React.JSX.Element {
       setRefreshing(false);
     }, 1000);
   }, []);
+  const closeRow = (
+    rowMap: {[x: string]: SwipeRow<unknown> | {closeRow: () => void}},
+    rowKey: string | number,
+  ) => {
+    if (rowMap[rowKey]) {
+      rowMap[rowKey].closeRow();
+    }
+  };
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar
@@ -135,6 +143,45 @@ function App(): React.JSX.Element {
         </View>
       ) : (
         <SwipeListView
+          onLeftAction={(rowKey, rowMap) => {
+            const item = todos.find(
+              (todo: {date: string}) => todo.date == rowKey,
+            );
+            if (item) {
+              console.log(item);
+              // console.log('Swiped', item.title);
+              item.completed ? console.log('item') : console.log('not item');
+
+              if (item.completed) {
+                const updatedTodos = todos.map((todo: {title: any}) => {
+                  if (todo.title === item.title) {
+                    return {...todo, completed: false};
+                  }
+                  return todo;
+                });
+
+                settodos(updatedTodos);
+                saveData(updatedTodos);
+                setremainCount(remainCount + 1);
+                closeRow(rowMap, item.key);
+                console.log('undoes');
+                rowMap[rowKey].closeRow();
+              } else {
+                const updatedTodos = todos.map((todo: {title: any}) => {
+                  if (todo.title === item.title) {
+                    return {...todo, completed: true};
+                  }
+                  return todo;
+                });
+
+                settodos(updatedTodos);
+                saveData(updatedTodos);
+                setremainCount(remainCount - 1);
+                console.log('undoes');
+                rowMap[rowKey].closeRow();
+              }
+            }
+          }}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -143,8 +190,33 @@ function App(): React.JSX.Element {
             />
           }
           data={todos}
+          keyExtractor={(rowData, index) => {
+            return rowData.date.toString();
+          }}
           style={styles.todoScroll}
-          renderItem={(data: any) => (
+          renderItem={(
+            data: {
+              item: {
+                completed: any;
+                title:
+                  | string
+                  | number
+                  | boolean
+                  | React.ReactElement<
+                      any,
+                      string | React.JSXElementConstructor<any>
+                    >
+                  | Iterable<React.ReactNode>
+                  | React.ReactPortal
+                  | null
+                  | undefined;
+                key: any;
+                date: string | number | Date;
+              };
+            },
+            rowData: any,
+            rowMap: any,
+          ) => (
             <TouchableWithoutFeedback
               onPress={
                 data.item.completed
@@ -159,6 +231,7 @@ function App(): React.JSX.Element {
                       settodos(updatedTodos);
                       saveData(updatedTodos);
                       setremainCount(remainCount + 1);
+                      closeRow(rowMap, data.item.key);
                     }
                   : () => {
                       const updatedTodos = todos.map((todo: {title: any}) => {
@@ -171,6 +244,7 @@ function App(): React.JSX.Element {
                       settodos(updatedTodos);
                       saveData(updatedTodos);
                       setremainCount(remainCount - 1);
+                      closeRow(rowMap, data.item.key);
                     }
               }>
               <View
@@ -201,64 +275,121 @@ function App(): React.JSX.Element {
             </TouchableWithoutFeedback>
           )}
           renderHiddenItem={(data: any) => (
-            <View style={[styles.todoCardControls, styles.rightControl]}>
-              <TouchableOpacity
-                onPress={
-                  data.item.completed
-                    ? () => {
-                        const updatedTodos = todos.map((todo: {title: any}) => {
-                          if (todo.title === data.item.title) {
-                            return {...todo, completed: false};
-                          }
-                          return todo;
-                        });
+            <>
+              <View style={[styles.todoCardControls, styles.rightControl]}>
+                <TouchableOpacity
+                  onPress={
+                    data.item.completed
+                      ? () => {
+                          const updatedTodos = todos.map(
+                            (todo: {title: any}) => {
+                              if (todo.title === data.item.title) {
+                                return {...todo, completed: false};
+                              }
+                              return todo;
+                            },
+                          );
 
-                        settodos(updatedTodos);
-                        saveData(updatedTodos);
-                        setremainCount(remainCount + 1);
-                      }
-                    : () => {
-                        const updatedTodos = todos.map((todo: {title: any}) => {
-                          if (todo.title === data.item.title) {
-                            return {...todo, completed: true};
-                          }
-                          return todo;
-                        });
+                          settodos(updatedTodos);
+                          saveData(updatedTodos);
+                          setremainCount(remainCount + 1);
+                        }
+                      : () => {
+                          const updatedTodos = todos.map(
+                            (todo: {title: any}) => {
+                              if (todo.title === data.item.title) {
+                                return {...todo, completed: true};
+                              }
+                              return todo;
+                            },
+                          );
 
-                        settodos(updatedTodos);
-                        saveData(updatedTodos);
-                        setremainCount(remainCount - 1);
-                      }
-                }>
-                {data.item.completed ? (
-                  <FontAwesomeIcon
-                    icon={faRotateLeft}
-                    style={{color: '#2596be', marginRight: 15}}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    style={{color: '#2596be', marginRight: 15}}
-                  />
-                )}
-              </TouchableOpacity>
-              <Text
-                style={styles.todoDeleteBtn}
-                onPress={() => {
-                  const filteredTodos = todos.filter(
-                    (element: any) => element.date != data.item.date,
-                  );
-                  settodos(filteredTodos);
-                  saveData(filteredTodos);
-                  !data.item.completed && setremainCount(remainCount - 1);
-                }}>
-                <FontAwesomeIcon icon={faTrash} style={{color: '#2596be'}} />
-              </Text>
-            </View>
+                          settodos(updatedTodos);
+                          saveData(updatedTodos);
+                          setremainCount(remainCount - 1);
+                        }
+                  }>
+                  {data.item.completed ? (
+                    <FontAwesomeIcon
+                      icon={faRotateLeft}
+                      style={{color: '#2596be', marginRight: 15}}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      style={{color: '#2596be', marginRight: 15}}
+                    />
+                  )}
+                </TouchableOpacity>
+                <Text
+                  style={styles.todoDeleteBtn}
+                  onPress={() => {
+                    const filteredTodos = todos.filter(
+                      (element: any) => element.date != data.item.date,
+                    );
+                    settodos(filteredTodos);
+                    saveData(filteredTodos);
+                    !data.item.completed && setremainCount(remainCount - 1);
+                  }}>
+                  <FontAwesomeIcon icon={faTrash} style={{color: '#2596be'}} />
+                </Text>
+              </View>
+              <View style={[styles.todoCardControls, styles.leftControl]}>
+                <TouchableOpacity
+                  onPress={
+                    data.item.completed
+                      ? () => {
+                          const updatedTodos = todos.map(
+                            (todo: {title: any}) => {
+                              if (todo.title === data.item.title) {
+                                return {...todo, completed: false};
+                              }
+                              return todo;
+                            },
+                          );
+
+                          settodos(updatedTodos);
+                          saveData(updatedTodos);
+                          setremainCount(remainCount + 1);
+                        }
+                      : () => {
+                          const updatedTodos = todos.map(
+                            (todo: {title: any}) => {
+                              if (todo.title === data.item.title) {
+                                return {...todo, completed: true};
+                              }
+                              return todo;
+                            },
+                          );
+
+                          settodos(updatedTodos);
+                          saveData(updatedTodos);
+                          setremainCount(remainCount - 1);
+                        }
+                  }>
+                  {data.item.completed ? (
+                    <FontAwesomeIcon
+                      icon={faRotateLeft}
+                      style={{color: '#2596be', marginRight: 15}}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      style={{color: '#2596be', marginRight: 15}}
+                    />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </>
           )}
-          leftOpenValue={85}
+          // leftOpenValue={85}
           rightOpenValue={-85}
-          disableRightSwipe={true}
+          // disableRightSwipe={true}
+          leftActivationValue={100}
+          leftActionValue={0}
+          // onLeftAction={item => {
+          //   console.log('swiped', item);
+          // }}
         />
       )}
 
