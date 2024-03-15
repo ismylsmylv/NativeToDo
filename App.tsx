@@ -4,18 +4,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   StatusBar,
   Text,
   TextInput,
+  Touchable,
+  TouchableHighlight,
   TouchableOpacity,
+  TouchableOpacityBase,
   View,
 } from 'react-native';
 import styles from './styles';
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCirclePlus, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {SwipeListView} from 'react-native-swipe-list-view';
 // import {faCheck} from '@fortawesome/free-solid-svg-icons';
 function formatDateToDayMonth(timestamp: string | number | Date) {
   const date = new Date(timestamp);
@@ -78,6 +83,8 @@ function App(): React.JSX.Element {
 
   const [input, setinput] = useState('');
   const [todos, settodos] = useState([] as object | string | any);
+  const [refreshing, setRefreshing] = useState(false);
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stored, setstored] = useState('');
   const [remainCount, setremainCount] = useState(0);
@@ -86,7 +93,12 @@ function App(): React.JSX.Element {
     // setremainCount(stored);
   }, []);
   const [isSelected, setSelection] = useState(false);
-
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
   return (
     <SafeAreaView style={styles.main}>
       <StatusBar
@@ -96,22 +108,107 @@ function App(): React.JSX.Element {
         translucent={false}
         networkActivityIndicatorVisible={true}
       />
-      <ScrollView style={styles.back}>
-        <View style={styles.backgroundContainer}>
-          <View style={styles.imageHero}>
-            <Text style={styles.backgroundContainerText}>Tasks</Text>
-            {
-              <Text style={styles.backgroundContainerCountText}>
-                {remainCount !== 0
-                  ? `${remainCount} remaining`
-                  : todos &&
-                    todos.length > 0 && <Text>All tasks completed</Text>}
-              </Text>
-            }
-          </View>
-        </View>
 
-        {todos && todos.length > 0 ? (
+      {/* <ScrollView
+        style={styles.back}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            style={styles.refresh}
+          />
+        }> */}
+      <View style={styles.backgroundContainer}>
+        <View style={styles.imageHero}>
+          <Text style={styles.backgroundContainerText}>Tasks</Text>
+          {
+            <Text style={styles.backgroundContainerCountText}>
+              {remainCount !== 0
+                ? `${remainCount} remaining`
+                : todos && todos.length > 0 && <Text>All tasks completed</Text>}
+            </Text>
+          }
+        </View>
+      </View>
+      <View
+      //  style={styles.swipeList}
+      >
+        <SwipeListView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              style={[styles.refresh, styles.swipeList]}
+            />
+          }
+          data={todos}
+          style={styles.todoScroll}
+          renderItem={(data: any, rowMap) => (
+            <TouchableOpacity
+              style={
+                data.item.completed
+                  ? [styles.todoCard, {borderColor: '#ababab'}]
+                  : [styles.todoCard, {borderColor: '#4260f5'}]
+              }
+              onPress={
+                data.item.completed
+                  ? () => {
+                      const updatedTodos = todos.map((todo: {title: any}) => {
+                        if (todo.title === data.item.title) {
+                          return {...todo, completed: false};
+                        }
+                        return todo;
+                      });
+
+                      settodos(updatedTodos);
+                      saveData(updatedTodos);
+                      setremainCount(remainCount + 1);
+                    }
+                  : () => {
+                      const updatedTodos = todos.map((todo: {title: any}) => {
+                        if (todo.title === data.item.title) {
+                          return {...todo, completed: true};
+                        }
+                        return todo;
+                      });
+
+                      settodos(updatedTodos);
+                      saveData(updatedTodos);
+                      setremainCount(remainCount - 1);
+                    }
+              }>
+              <View style={styles.todoContent}>
+                <Text
+                  style={
+                    data.item.completed
+                      ? [styles.todoCardTitle, styles.completedTodo]
+                      : [styles.todoCardTitle]
+                  }>
+                  {data.item.title}
+                </Text>
+                <Text
+                  style={
+                    data.item.completed
+                      ? {color: '#ababab'}
+                      : {color: '#2596be'}
+                  }>
+                  from {formatDateToDayMonth(data.item.date)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          renderHiddenItem={(data, rowMap) => (
+            <View style={styles.rowBack}>
+              {/* <Text>Left</Text> */}
+              <Text style={styles.rightControl}>Right</Text>
+            </View>
+          )}
+          leftOpenValue={75}
+          rightOpenValue={-75}
+          disableRightSwipe={true}
+        />
+      </View>
+      {/* {todos && todos.length > 0 ? (
           <View style={styles.todoCardList}>
             {todos &&
               todos.map((elem: any) => {
@@ -254,8 +351,8 @@ function App(): React.JSX.Element {
             <Text style={styles.placeholderTexts}>Nothing to see here</Text>
             <Text style={styles.placeholderTexts}>Enjoy the productivity!</Text>
           </View>
-        )}
-      </ScrollView>
+        )} */}
+      {/* </ScrollView> */}
       <View style={styles.inputBar}>
         <TextInput
           style={styles.inputField}

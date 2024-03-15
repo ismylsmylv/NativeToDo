@@ -4,6 +4,13 @@ const styles = StyleSheet.create({
     backgroundContainer: {
         // borderColor: '#4260f5',
         // borderWidth: 4,
+        // position: 'absolute',
+        // top: 0,
+        width: '100%',
+        flex: 1,
+        height: 200,
+        zIndex: 100
+        // position: 'absolute'
     },
     linearGradient: {
         flex: 1,
@@ -47,6 +54,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         overflowY: 'scroll',
+        position: 'relative',
     },
     todoContent: {
         marginRight: 15,
@@ -126,6 +134,7 @@ const styles = StyleSheet.create({
     },
     back: {
         backgroundColor: 'white',
+        flex: 1
     },
     placeholder: {
         display: 'flex',
@@ -164,6 +173,21 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    refresh: {
+        marginTop: 300
+    },
+    rightControl: {
+        position: 'absolute',
+        right: 0,
+        top: 0
+    },
+    todoScroll: {
+        marginBottom: 40
+    },
+    swipeList: {
+        // paddingBottom: 60
+        marginBottom: 90
     }
 });
 
