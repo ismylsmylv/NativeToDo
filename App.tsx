@@ -148,12 +148,7 @@ function App(): React.JSX.Element {
             const item = todos.find(
               (todo: {date: string}) => todo.date == rowKey,
             );
-            // Vibration.vibrate(1000);
             if (item) {
-              // console.log(item);
-              // console.log('Swiped', item.title);
-              // item.completed ? console.log('item') : console.log('not item');
-
               if (item.completed) {
                 const updatedTodos = todos.map((todo: {title: any}) => {
                   if (todo.title === item.title) {
